@@ -1,54 +1,107 @@
 # MyFirstTGBot
 
-A minimal Python Telegram bot skeleton — the starting point for learning the python-telegram-bot library.
+A working Telegram bot built with **python-telegram-bot v21** (async).
+Supports commands, an inline keyboard menu, and a simple echo handler.
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=flat&logo=telegram&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white)
+![Telegram](https://img.shields.io/badge/Telegram%20Bot-API-2CA5E0?style=flat&logo=telegram&logoColor=white)
 
-## Overview
+---
 
-This repository contains the initial scaffold created when learning how to build Telegram bots with Python. The `main.py` file at the time of commit contains the PyCharm default template; the actual bot logic was developed locally and is not fully committed here.
+## Features
 
-## Tech Stack
+| Command | What it does |
+|---------|-------------|
+| `/start` | Welcome message with the user's first name |
+| `/help` | List of all available commands |
+| `/about` | Info about the bot and a link to the source |
+| `/roll` | Roll a six-sided die 🎲 |
+| `/menu` | Open an inline keyboard with quick-action buttons |
+| _(any text)_ | Echo the message back |
 
-- Python 3
-- python-telegram-bot (or aiogram — see your local environment)
+The inline `/menu` keyboard lets users roll the die, view the about text, or
+read the help — without typing commands.
 
-## Getting Started
+---
 
-1. Clone the repository:
+## Project structure
+
+```
+MyFirstTGBot/
+├── bot/
+│   ├── __init__.py
+│   ├── app.py          # application factory (registers all handlers)
+│   ├── config.py       # reads BOT_TOKEN from the environment
+│   └── handlers/
+│       ├── __init__.py
+│       ├── core.py     # /start, /help, /about
+│       ├── fun.py      # /roll, /menu, inline keyboard callbacks
+│       └── echo.py     # plain-text echo handler
+├── main.py             # entry point
+├── requirements.txt
+├── .env.example
+└── .gitignore
+```
+
+---
+
+## Setup
+
+### 1. Get a bot token
+
+Open Telegram, start a chat with [@BotFather](https://t.me/BotFather), and
+run `/newbot`. Copy the token it gives you.
+
+### 2. Clone and create a virtual environment
 
 ```bash
 git clone https://github.com/Adilforest/MyFirstTGBot.git
 cd MyFirstTGBot
-```
 
-2. Create and activate a virtual environment:
-
-```bash
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 ```
 
-3. Install dependencies (add a `requirements.txt` as you extend the bot):
+### 3. Install dependencies
 
 ```bash
-pip install python-telegram-bot
+pip install -r requirements.txt
 ```
 
-4. Set your bot token as an environment variable (never hard-code tokens in source):
+### 4. Set the bot token
+
+**Option A — `.env` file (recommended for local development):**
 
 ```bash
-export TELEGRAM_BOT_TOKEN="your_token_here"
+cp .env.example .env
+# open .env and fill in your token:
+# BOT_TOKEN=123456:ABC-...
 ```
 
-5. Run the bot:
+**Option B — environment variable:**
+
+```bash
+export BOT_TOKEN="123456:ABC-..."
+```
+
+> `.env` is listed in `.gitignore` and will never be committed.
+
+### 5. Run
 
 ```bash
 python main.py
 ```
 
-> **Note:** Obtain a token from [@BotFather](https://t.me/BotFather) on Telegram. Keep it out of version control — add `.env` and any token files to `.gitignore`.
+The bot starts polling Telegram and logs activity to stdout. Stop it with
+**Ctrl-C**.
+
+---
+
+## Requirements
+
+- Python 3.10+
+- `python-telegram-bot` 21.x
+- `python-dotenv` 1.x
 
 ---
 
